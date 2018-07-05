@@ -1,0 +1,20 @@
+---
+- name: iInstalar Jenkins
+  hosts: automation
+  tasks:  
+    - name: Adiciona o repositorio
+      yum_repository:
+        name: jenkins.repo
+        description: Jenkins Repository
+        baseurl: http://pkg.jenkins.io/redhat-stable 
+        gpgkey: https://jenkins-ci.org/redhat/jenkins-ci.org.key
+        gpgcheck: yes
+        state: present
+
+    - name: Instala Jenkins
+      yum:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - java
+        - jenkins
